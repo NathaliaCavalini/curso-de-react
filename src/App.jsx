@@ -1,36 +1,37 @@
 import { useState } from "react";
 import AddTask from "./Components/AddTask";
 import Tasks from "./Components/Tasks";
+import { v4 } from "uuid";
 
 function App() {
   const [tasks, setTasks] = useState([
     {
       id: 1,
       title: "Estudar programação",
-      desciption:
+      description:
         "Estudar programação para se tornar um desenvolvedor full-stack",
       isCompleted: false,
     },
     {
       id: 2,
       title: "Estudar Inglês",
-      desciption: "Estudar inglês para se tornar fluente",
+      description: "Estudar inglês para se tornar fluente",
       isCompleted: false,
     },
     {
       id: 3,
       title: "Estudar matemática",
-      desciption:
+      description:
         "Estudar matemática para se tornar um desenvolvedor full-stack",
       isCompleted: false,
     },
   ]);
 
   function onTaskClick(taskId) {
-    const newTasks = tasks.map(task => {
+    const newTasks = tasks.map((task) => {
       //Preciso atualizar a tarefa
       if (task.id === taskId) {
-        return {...task, isCompleted: !task.isCompleted}
+        return { ...task, isCompleted: !task.isCompleted };
       }
 
       //Nao preciso atualizar a tarefa
@@ -39,21 +40,20 @@ function App() {
     setTasks(newTasks);
   }
 
-function onDeleteTaskClick(taskId) {
-  const newTasks = tasks.filter(task => task.id != taskId);
-  setTasks(newTasks);
-}
+  function onDeleteTaskClick(taskId) {
+    const newTasks = tasks.filter((task) => task.id != taskId);
+    setTasks(newTasks);
+  }
 
   function onAddTaskSubmit(title, description) {
     const newTask = {
-      id: tasks.length + 1, 
+      id: v4(),
       title,
       description,
       isCompleted: false,
     };
-  setTasks([...tasks, newTask])
-}
-
+    setTasks([...tasks, newTask]);
+  }
 
   return (
     <div className="w-screen h-screen bg-slate-500 flex justify-center p-6">
@@ -61,11 +61,16 @@ function onDeleteTaskClick(taskId) {
         <h1 className="text-3xl text-slate-100 font-bold text-center">
           Gerenciador de tarefas
         </h1>
-        <AddTask setTasks={setTasks} tasks={tasks} onAddTaskSubmit={onAddTaskSubmit} />
-        <Tasks 
-        tasks={tasks} 
-        onTaskClick={onTaskClick} 
-        onDeleteTaskClick={onDeleteTaskClick} />
+        <AddTask
+          setTasks={setTasks}
+          tasks={tasks}
+          onAddTaskSubmit={onAddTaskSubmit}
+        />
+        <Tasks
+          tasks={tasks}
+          onTaskClick={onTaskClick}
+          onDeleteTaskClick={onDeleteTaskClick}
+        />
       </div>
     </div>
   );

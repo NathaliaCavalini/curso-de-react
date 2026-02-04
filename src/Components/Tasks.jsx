@@ -8,12 +8,15 @@ function Tasks({ tasks, onTaskClick, onDeleteTaskClick }) {
     const navigate = useNavigate();
     const title = encodeURIComponent(task.title ?? "");
     const description = encodeURIComponent(
-      task.description ?? task.desciption ?? "",
+      task.description ?? task.description ?? "",
     );
     navigate(`/task?title=${title}&description=${description}`);
   }
 
   function onSeeDetailsClick(task) {
+    const query = new URLSearchParams();
+    query.set("title", task.title)
+    query.set("description", task.description);
     navigate(`/task?title=${task.title}&description=${task.description}`);
   }
   return (
